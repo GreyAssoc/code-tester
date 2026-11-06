@@ -22,7 +22,20 @@ type Result struct {
 	Primary  []*packages.Package // analyzed packages matching patterns (non-dependency)
 }
 
+// LoadOptions configures packages.Load (D-015-04 GOOS matrix).
+type LoadOptions struct {
+	Dir      string
+	Patterns []string
+	Tests    bool
+	GOOS     string // if set, overrides GOOS in the load environment
+}
+
 func Load(dir string, patterns []string, loadTests bool) (*Result, error) {
+	return LoadOpts(LoadOptions{Dir: dir, Patterns: patterns, Tests: loadTests})
+}
+
+func LoadOpts(opts LoadOptions) (*Result, error) {
+	patterns := opts.Patterns
 	if len(patterns) == 0 {
 		patterns = []string{"./..."}
 	}
@@ -38,8 +51,11 @@ func Load(dir string, patterns []string, loadTests bool) (*Result, error) {
 		packages.NeedModule
 	cfg := &packages.Config{
 		Mode:  mode,
-		Dir:   dir,
-		Tests: loadTests,
+		Dir:   opts.Dir,
+		Tests: opts.Tests,
+	}
+	if opts.GOOS != "" {
+		cfg.Env = append(append([]string{}, os.Environ()...), "GOOS="+opts.GOOS)
 	}
 	pkgs, err := packages.Load(cfg, patterns...)
 	if err != nil {

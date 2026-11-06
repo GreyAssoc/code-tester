@@ -200,9 +200,10 @@ func cmdGoCrawl(args []string) int {
 			f.To = strings.TrimPrefix(a, "--to=")
 		case a == "--verify-incremental":
 			f.VerifyIncremental = true
+			f.Flow = true // verify runs inside the flow build path
 		case a == "--cache":
 			f.Cache = true
-			f.Flow = true
+			// cache is opt-in persistence only; does not force --flow
 		case strings.HasPrefix(a, "-"):
 			fmt.Fprintf(os.Stderr, "unknown flag %s\n", a)
 			return 2
@@ -348,6 +349,37 @@ func cmdGoCrawl(args []string) int {
 				rf.Evidence = append(rf.Evidence, report.Evidence{Message: "depends on reflect/unsafe/cgo approximation"})
 			}
 			findings = append(findings, rf)
+		}
+	}
+
+	// D-015-04: extra GOOS=windows pass when the tree has Windows-oriented sources.
+	if loader.DetectWindowsOriented(f.Dir) {
+		fmt.Fprintln(os.Stderr, "windows-oriented Go code detected; adding GOOS=windows analysis pass")
+		if wres, err := loader.LoadOpts(loader.LoadOptions{
+			Dir: f.Dir, Patterns: patterns, Tests: cfg.TestsEnabled(), GOOS: "windows",
+		}); err == nil {
+			widx := callgraph.Build(wres, f.Dir)
+			wreach := callgraph.Analyze(widx, callgraph.Roots(widx, rootKinds))
+			wf, wsup := rules.RunCrawl(rules.Context{Index: widx, Reach: wreach, Config: cfg, RootDir: f.Dir}, en)
+			suppressed += wsup
+			seen := map[string]bool{}
+			for _, x := range findings {
+				if x.Fingerprint != "" {
+					seen[x.Fingerprint] = true
+				}
+			}
+			for _, x := range wf {
+				if x.Fingerprint != "" && seen[x.Fingerprint] {
+					continue
+				}
+				if x.Message != "" && !strings.Contains(x.Message, "GOOS=") {
+					x.Message += " [GOOS=windows]"
+				}
+				findings = append(findings, x)
+				if x.Fingerprint != "" {
+					seen[x.Fingerprint] = true
+				}
+			}
 		}
 	}
 

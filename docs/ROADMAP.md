@@ -25,7 +25,7 @@ Status values: `todo` · `doing` · `done` · `parked`
 | R-011 | De-dupe overlapping findings (STUB + COH + DEAD on same symbol) | todo | Demote or suppress when stronger rule fired |
 | R-012 | `--mode library\|app` (or smarter default when no `main`) | todo | Quiet library self-crawls without hand-tuned `--roots` |
 | R-013 | Default `--context=1`; broad FLOW lists; strict FLOW002 (D-015-01..03) | done | context default 1; expanded DefaultSources/Sinks/secrets; FLOW002 error+high |
-| R-014 | Windows-aware multi-config Go analysis (D-015-04) | todo | Detect Windows-oriented code; extra GOOS=windows pass on Linux hosts |
+| R-014 | Windows-aware multi-config Go analysis (D-015-04) | done | Detect *_windows.go / go:build windows; extra GOOS=windows pass; lean otherwise |
 | R-015 | Field-level dead code + field-use tracking (D-015-05) | todo | Rule on once tracking is solid |
 | R-016 | Chunked SARIF by path-depth bands (D-015-07) | todo | e.g. 0–3, 4–7, 8–10… |
 | R-017 | No persisted analysis cache by default (D-015-08) | done | No save unless `--cache`; gitignore `.gointegrity-cache/`; CI unchanged (go module cache only) |

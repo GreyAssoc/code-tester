@@ -82,7 +82,7 @@ Go deep crawl flags (also used by check):
   --min-confidence level
   --enable/--disable sel
   --baseline / --write-baseline file
-  --flow / --context=0|1 / --policies file / --suppressions file
+  --flow / --context=0|1 (default 1) / --policies file / --suppressions file
   --focus symbol / --depth N / --from/--to node
   --verify-incremental
   --format text|json|sarif|dot|mermaid|html

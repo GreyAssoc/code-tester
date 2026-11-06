@@ -87,7 +87,8 @@ func (d Driver) Crawl(opts lang.Options) (*report.Report, error) {
 		suppressed += sup
 
 		if opts.Flow {
-			g, _ := flow.Build(idx, flow.BuildOptions{RootDir: opts.RootDir})
+			// D-015-01: default context sensitivity 1; D-015-02: DefaultSources/Sinks via Build.
+			g, _ := flow.Build(idx, flow.BuildOptions{RootDir: opts.RootDir, ContextSens: 1})
 			primary := map[string]bool{}
 			for _, p := range idx.Packages {
 				if p != nil && p.PkgPath != "" {

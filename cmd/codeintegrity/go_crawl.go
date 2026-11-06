@@ -37,7 +37,8 @@ type crawlFlags struct {
 	Baseline          string
 	WriteBaseline     string
 	Flow              bool
-	Context           int
+	Context           int  // D-015-01: default 1 when flow is on
+	ContextSet        bool // true if --context was passed explicitly
 	Policies          string
 	Suppressions      string
 	Focus             string
@@ -162,8 +163,10 @@ func cmdGoCrawl(args []string) int {
 		case a == "--context" && i+1 < len(rest):
 			i++
 			fmt.Sscanf(rest[i], "%d", &f.Context)
+			f.ContextSet = true
 		case strings.HasPrefix(a, "--context="):
 			fmt.Sscanf(strings.TrimPrefix(a, "--context="), "%d", &f.Context)
+			f.ContextSet = true
 		case a == "--policies" && i+1 < len(rest):
 			i++
 			f.Policies = rest[i]
@@ -293,7 +296,11 @@ func cmdGoCrawl(args []string) int {
 			}
 			sup = s
 		}
-		opts := flow.BuildOptions{ContextSens: f.Context, Sources: sources, Sinks: sinks, RootDir: f.Dir}
+		ctxSens := f.Context
+		if !f.ContextSet {
+			ctxSens = 1 // D-015-01 default when --flow is on
+		}
+		opts := flow.BuildOptions{ContextSens: ctxSens, Sources: sources, Sinks: sinks, RootDir: f.Dir}
 		g, pt := flow.Build(idx, opts)
 		flowGraph = g
 		if f.VerifyIncremental {

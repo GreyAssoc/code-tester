@@ -15,35 +15,91 @@ const (
 	LabelConstant  Label = "constant"
 )
 
-var secretNamePattern = regexp.MustCompile(`(?i)(password|passwd|secret|token|api[_-]?key|private[_-]?key|credential|auth)`)
+// Broad secret-name patterns (D-015-02): prefer recall; triage false positives later.
+var secretNamePattern = regexp.MustCompile(`(?i)(password|passwd|pwd|secret|token|api[_-]?key|private[_-]?key|credential|auth|bearer|session|cookie|csrf|oauth|refresh[_-]?token|access[_-]?key|secret[_-]?key|client[_-]?secret|encryption[_-]?key|signing[_-]?key|ssh[_-]?key|pem|cert|keypair|connection[_-]?string|database[_-]?url|db[_-]?pass)`)
 
-// DefaultSources returns built-in source matchers (symbol substrings / patterns).
+// DefaultSources returns built-in source matchers (D-015-02 broad lists).
 func DefaultSources() []SourceSpec {
 	return []SourceSpec{
 		{Label: LabelUserInput, Match: "os.Args"},
 		{Label: LabelUserInput, Match: "flag."},
 		{Label: LabelUserInput, Match: "http.Request"},
 		{Label: LabelUserInput, Match: "(*http.Request)"},
+		{Label: LabelUserInput, Match: "Request.Form"},
+		{Label: LabelUserInput, Match: "Request.PostForm"},
+		{Label: LabelUserInput, Match: "Request.Body"},
+		{Label: LabelUserInput, Match: "Request.URL"},
+		{Label: LabelUserInput, Match: "Request.Header"},
+		{Label: LabelUserInput, Match: "Request.Cookie"},
+		{Label: LabelUserInput, Match: "Request.MultipartForm"},
 		{Label: LabelUserInput, Match: "json.Decoder.Decode"},
+		{Label: LabelUserInput, Match: "json.Unmarshal"},
+		{Label: LabelUserInput, Match: "xml.Decoder.Decode"},
+		{Label: LabelUserInput, Match: "xml.Unmarshal"},
+		{Label: LabelUserInput, Match: "yaml.Unmarshal"},
 		{Label: LabelUserInput, Match: "os.ReadFile"},
+		{Label: LabelUserInput, Match: "os.ReadDir"},
+		{Label: LabelUserInput, Match: "io.ReadAll"},
+		{Label: LabelUserInput, Match: "io.Copy"},
 		{Label: LabelUserInput, Match: "bufio.Scanner"},
+		{Label: LabelUserInput, Match: "bufio.Reader"},
+		{Label: LabelUserInput, Match: "mime/multipart"},
+		{Label: LabelUserInput, Match: "gorilla/mux"},
+		{Label: LabelUserInput, Match: "gin.Context"},
+		{Label: LabelUserInput, Match: "echo.Context"},
+		{Label: LabelUserInput, Match: "fiber.Ctx"},
+		{Label: LabelUserInput, Match: "chi."},
 		{Label: LabelConfig, Match: "os.Getenv"},
 		{Label: LabelConfig, Match: "os.LookupEnv"},
+		{Label: LabelConfig, Match: "os.Environ"},
+		{Label: LabelSecret, Match: "crypto/tls"},
 	}
 }
 
+// DefaultSinks returns built-in sensitive sinks (D-015-02 broad lists).
 func DefaultSinks() []SinkSpec {
 	return []SinkSpec{
 		{Name: "log", Match: "log.Print"},
 		{Name: "log", Match: "log.Fatal"},
 		{Name: "log", Match: "log.Panic"},
+		{Name: "log", Match: "log.Output"},
 		{Name: "log", Match: "fmt.Print"},
+		{Name: "log", Match: "fmt.Fprintf"},
 		{Name: "log", Match: "(*log.Logger)"},
+		{Name: "log", Match: "slog."},
+		{Name: "log", Match: "zap."},
 		{Name: "exec", Match: "os/exec"},
 		{Name: "exec", Match: "exec.Command"},
+		{Name: "exec", Match: "exec.CommandContext"},
+		{Name: "exec", Match: "syscall.Exec"},
+		{Name: "exec", Match: "syscall.StartProcess"},
+		{Name: "eval", Match: "text/template"},
+		{Name: "eval", Match: "html/template"},
+		{Name: "eval", Match: "template.Execute"},
+		{Name: "eval", Match: "vm.Program"},
 		{Name: "network", Match: "http.Post"},
 		{Name: "network", Match: "http.Get"},
+		{Name: "network", Match: "http.Client"},
+		{Name: "network", Match: "http.NewRequest"},
 		{Name: "network", Match: "net.Dial"},
+		{Name: "network", Match: "net.DialTimeout"},
+		{Name: "network", Match: "websocket"},
+		{Name: "network", Match: "grpc."},
+		{Name: "db", Match: "database/sql"},
+		{Name: "db", Match: "sql.DB"},
+		{Name: "db", Match: "sql.Tx"},
+		{Name: "db", Match: "ExecContext"},
+		{Name: "db", Match: "QueryContext"},
+		{Name: "db", Match: "QueryRow"},
+		{Name: "db", Match: "gorm."},
+		{Name: "db", Match: "mongo."},
+		{Name: "fs", Match: "os.WriteFile"},
+		{Name: "fs", Match: "os.Create"},
+		{Name: "fs", Match: "os.OpenFile"},
+		{Name: "fs", Match: "ioutil.WriteFile"},
+		{Name: "crypto", Match: "crypto/rsa"},
+		{Name: "crypto", Match: "crypto/aes"},
+		{Name: "crypto", Match: "cipher."},
 	}
 }
 

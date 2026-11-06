@@ -157,8 +157,9 @@ func (g *Graph) AnalyzeRules(opts AnalyzeOptions) (findings []Finding, verdicts 
 				RuleID:      RuleDroppedInput,
 				Rule:        "dropped-input",
 				Category:    "flow",
-				Severity:    report.SeverityWarning,
-				Confidence:  report.ConfidenceMedium,
+				// D-015-03: strict dropped-input — error + high confidence.
+				Severity:    report.SeverityError,
+				Confidence:  report.ConfidenceHigh,
 				Message:     msg,
 				Symbol:      src.Symbol,
 				Fingerprint: report.Fingerprint(RuleDroppedInput, src.Symbol, msg, ""),

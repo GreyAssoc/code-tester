@@ -44,7 +44,7 @@ var All = []Rule{
 	{ID: "COH004", Name: "constant-result", Category: "coherence", Severity: report.SeverityWarning, Description: "non-error result is constant on every return path"},
 	{ID: "SUP001", Name: "invalid-suppression", Category: "suppression", Severity: report.SeverityNote, Description: "malformed gointegrity:ignore directive"},
 	{ID: "FLOW001", Name: "undeclared-sensitive-flow", Category: "flow", Severity: report.SeverityWarning, Description: "labeled value reaches a sensitive sink without an allowing policy"},
-	{ID: "FLOW002", Name: "dropped-input", Category: "flow", Severity: report.SeverityWarning, Description: "input value never reaches an output, sink, or memory cell"},
+	{ID: "FLOW002", Name: "dropped-input", Category: "flow", Severity: report.SeverityError, Description: "input value never reaches an output, sink, or memory cell (strict; D-015-03)"},
 }
 
 func ByID(id string) (Rule, bool) {

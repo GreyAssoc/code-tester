@@ -5,10 +5,10 @@ import (
 	"path/filepath"
 	"strings"
 
-	"gointegrity/config"
-	"gointegrity/lang"
-	"gointegrity/lang/css/engine"
-	"gointegrity/report"
+	"github.com/GreyAssoc/code-tester/config"
+	"github.com/GreyAssoc/code-tester/lang"
+	"github.com/GreyAssoc/code-tester/lang/css/engine"
+	"github.com/GreyAssoc/code-tester/report"
 )
 
 type Driver struct{}

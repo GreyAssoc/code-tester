@@ -7,12 +7,12 @@ import (
 	"strings"
 	"testing"
 
-	"gointegrity/check"
-	"gointegrity/config"
-	"gointegrity/internal/runtest"
-	"gointegrity/report"
-	"gointegrity/rules"
-	"gointegrity/schemas"
+	"github.com/GreyAssoc/code-tester/check"
+	"github.com/GreyAssoc/code-tester/config"
+	"github.com/GreyAssoc/code-tester/internal/runtest"
+	"github.com/GreyAssoc/code-tester/report"
+	"github.com/GreyAssoc/code-tester/rules"
+	"github.com/GreyAssoc/code-tester/schemas"
 )
 
 func TestCrawlFixture(t *testing.T) {

@@ -4,7 +4,7 @@ import (
 	"regexp"
 	"strings"
 
-	"gointegrity/report"
+	"github.com/GreyAssoc/code-tester/report"
 )
 
 var (

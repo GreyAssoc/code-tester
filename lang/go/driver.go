@@ -5,13 +5,13 @@ import (
 	"path/filepath"
 	"strings"
 
-	"gointegrity/callgraph"
-	"gointegrity/config"
-	"gointegrity/flow"
-	"gointegrity/lang"
-	"gointegrity/loader"
-	"gointegrity/report"
-	"gointegrity/rules"
+	"github.com/GreyAssoc/code-tester/callgraph"
+	"github.com/GreyAssoc/code-tester/config"
+	"github.com/GreyAssoc/code-tester/flow"
+	"github.com/GreyAssoc/code-tester/lang"
+	"github.com/GreyAssoc/code-tester/loader"
+	"github.com/GreyAssoc/code-tester/report"
+	"github.com/GreyAssoc/code-tester/rules"
 )
 
 // Driver implements lang.Driver for Go.

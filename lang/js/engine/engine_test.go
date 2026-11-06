@@ -3,7 +3,7 @@ package engine_test
 import (
 	"testing"
 
-	"gointegrity/lang/js/engine"
+	"github.com/GreyAssoc/code-tester/lang/js/engine"
 )
 
 func TestTSReturnMismatch(t *testing.T) {

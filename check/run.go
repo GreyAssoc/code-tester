@@ -1,9 +1,9 @@
 package check
 
 import (
-	"gointegrity/callgraph"
-	"gointegrity/report"
-	"gointegrity/rules"
+	"github.com/GreyAssoc/code-tester/callgraph"
+	"github.com/GreyAssoc/code-tester/report"
+	"github.com/GreyAssoc/code-tester/rules"
 )
 
 func Run(req *Request, idx *callgraph.Index, reach *callgraph.Reachability, rootDir string, rctx rules.Context) *report.Report {

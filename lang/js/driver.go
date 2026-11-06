@@ -5,10 +5,10 @@ import (
 	"path/filepath"
 	"strings"
 
-	"gointegrity/config"
-	"gointegrity/lang"
-	"gointegrity/lang/js/engine"
-	"gointegrity/report"
+	"github.com/GreyAssoc/code-tester/config"
+	"github.com/GreyAssoc/code-tester/lang"
+	"github.com/GreyAssoc/code-tester/lang/js/engine"
+	"github.com/GreyAssoc/code-tester/report"
 )
 
 // Driver covers JavaScript and TypeScript variants via the deep typechecker engine.

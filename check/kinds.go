@@ -9,9 +9,9 @@ import (
 
 	"golang.org/x/tools/go/ssa"
 
-	"gointegrity/callgraph"
-	"gointegrity/report"
-	"gointegrity/rules"
+	"github.com/GreyAssoc/code-tester/callgraph"
+	"github.com/GreyAssoc/code-tester/report"
+	"github.com/GreyAssoc/code-tester/rules"
 )
 
 type Engine struct {

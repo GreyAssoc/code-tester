@@ -5,7 +5,7 @@ import (
 	"path/filepath"
 	"strings"
 
-	"gointegrity/report"
+	"github.com/GreyAssoc/code-tester/report"
 )
 
 const ignorePrefix = "gointegrity:ignore"

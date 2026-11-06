@@ -5,10 +5,10 @@ import (
 	"path/filepath"
 	"strings"
 
-	"gointegrity/config"
-	"gointegrity/lang"
-	"gointegrity/lang/python/engine"
-	"gointegrity/report"
+	"github.com/GreyAssoc/code-tester/config"
+	"github.com/GreyAssoc/code-tester/lang"
+	"github.com/GreyAssoc/code-tester/lang/python/engine"
+	"github.com/GreyAssoc/code-tester/report"
 )
 
 // Driver implements lang.Driver for Python using the deep typechecker engine.

@@ -3,9 +3,9 @@ package rules
 import (
 	"strings"
 
-	"gointegrity/callgraph"
-	"gointegrity/config"
-	"gointegrity/report"
+	"github.com/GreyAssoc/code-tester/callgraph"
+	"github.com/GreyAssoc/code-tester/config"
+	"github.com/GreyAssoc/code-tester/report"
 )
 
 type Rule struct {

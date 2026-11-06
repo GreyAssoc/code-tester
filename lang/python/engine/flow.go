@@ -4,7 +4,7 @@ import (
 	"regexp"
 	"strings"
 
-	"gointegrity/report"
+	"github.com/GreyAssoc/code-tester/report"
 )
 
 // Heuristic sources / sinks for Python FLOW rules (mirrors Go FLOW001/002 depth).

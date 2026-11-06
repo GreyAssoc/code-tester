@@ -1,6 +1,6 @@
 package lang
 
-import "gointegrity/report"
+import "github.com/GreyAssoc/code-tester/report"
 
 // ID is a supported analysis language.
 type ID string

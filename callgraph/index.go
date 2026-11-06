@@ -9,7 +9,7 @@ import (
 	"golang.org/x/tools/go/packages"
 	"golang.org/x/tools/go/ssa"
 
-	"gointegrity/loader"
+	"github.com/GreyAssoc/code-tester/loader"
 )
 
 type Kind int

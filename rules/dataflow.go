@@ -7,7 +7,7 @@ import (
 
 	"golang.org/x/tools/go/ssa"
 
-	"gointegrity/callgraph"
+	"github.com/GreyAssoc/code-tester/callgraph"
 )
 
 // ParamSummary describes how a parameter is used inside a function.

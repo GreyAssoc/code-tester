@@ -6,8 +6,8 @@ import (
 	"go/types"
 	"strings"
 
-	"gointegrity/callgraph"
-	"gointegrity/report"
+	"github.com/GreyAssoc/code-tester/callgraph"
+	"github.com/GreyAssoc/code-tester/report"
 )
 
 func CheckStubs(ctx Context, en Enablement) ([]Finding, map[string]bool) {

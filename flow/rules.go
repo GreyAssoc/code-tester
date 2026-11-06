@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"strings"
 
-	"gointegrity/report"
+	"github.com/GreyAssoc/code-tester/report"
 )
 
 const (

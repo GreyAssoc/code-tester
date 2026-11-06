@@ -17,8 +17,8 @@ Slice 1: assessor + Go SSA/RTA engine + Python/JS/CSS deep engines, one merged r
 
 ## [CONVENTIONS]
 
-- Module path (current): `gointegrity` — **decision D-015-09:** rename to match product/repo (`github.com/GreyAssoc/code-tester`); CLI stays `codeintegrity`
-- Shared report schema: `gointegrity/report/v1` (schema id may keep historical name until a versioned bump)
+- Module path: `github.com/GreyAssoc/code-tester` (D-015-09 / R-004). CLI binary: `codeintegrity`
+- Shared report schema id (wire format): `gointegrity/report/v1` — historical id kept for compatibility; import paths use the new module
 - Drivers implement `lang.Driver` (`Detect`, `Crawl`, `Rules`)
 - Crawl routing: package patterns (`./...`) or Go-only flags → deep Go engine; otherwise multi-language assessor
 - Default fail-on: `warning` for local; CI dogfood uses `--fail-on error`

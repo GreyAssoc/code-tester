@@ -4,8 +4,8 @@ import (
 	"fmt"
 	"go/types"
 
-	"gointegrity/callgraph"
-	"gointegrity/report"
+	"github.com/GreyAssoc/code-tester/callgraph"
+	"github.com/GreyAssoc/code-tester/report"
 )
 
 func CheckDead(ctx Context, en Enablement) []Finding {

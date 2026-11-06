@@ -4,13 +4,13 @@ import (
 	"fmt"
 	"sort"
 
-	"gointegrity/config"
-	"gointegrity/lang"
-	langcss "gointegrity/lang/css"
-	langgo "gointegrity/lang/go"
-	langjs "gointegrity/lang/js"
-	langpy "gointegrity/lang/python"
-	"gointegrity/report"
+	"github.com/GreyAssoc/code-tester/config"
+	"github.com/GreyAssoc/code-tester/lang"
+	langcss "github.com/GreyAssoc/code-tester/lang/css"
+	langgo "github.com/GreyAssoc/code-tester/lang/go"
+	langjs "github.com/GreyAssoc/code-tester/lang/js"
+	langpy "github.com/GreyAssoc/code-tester/lang/python"
+	"github.com/GreyAssoc/code-tester/report"
 )
 
 // Registry returns the built-in language drivers.

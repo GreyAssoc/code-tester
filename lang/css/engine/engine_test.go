@@ -3,7 +3,7 @@ package engine_test
 import (
 	"testing"
 
-	"gointegrity/lang/css/engine"
+	"github.com/GreyAssoc/code-tester/lang/css/engine"
 )
 
 func TestUnusedSelectorAndEmpty(t *testing.T) {

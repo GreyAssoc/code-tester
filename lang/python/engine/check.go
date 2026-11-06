@@ -5,7 +5,7 @@ import (
 	"regexp"
 	"strings"
 
-	"gointegrity/report"
+	"github.com/GreyAssoc/code-tester/report"
 )
 
 // Analyze runs the deep Python integrity engine (DEAD/STUB/COH/SUP/FLOW + types).

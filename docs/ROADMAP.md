@@ -15,7 +15,7 @@ Status values: `todo` · `doing` · `done` · `parked`
 | R-001 | Kill `internal/poll` SSA panic — bump `golang.org/x/tools` (align Go toolchain); keep recover as safety net | done | `x/tools` → v0.35.0; `go` 1.23.0; loader recover kept |
 | R-002 | Default dogfood-friendly excludes (`testdata/**`, `node_modules/**`, `.git/**`) + “excluded N paths” stderr line | done | `config.DefaultExcludes` / `MergeExcludes`; CLI prints `excluded: N path(s)` |
 | R-003 | `codeintegrity rules` lists all languages via assessor / `lang/*/Rules()` | done | Registry-driven; optional `--lang` filter |
-| R-004 | Module rename per D-015-09 (`github.com/GreyAssoc/code-tester`) + fix all imports | todo | Decision recorded; implementation pending |
+| R-004 | Module rename per D-015-09 (`github.com/GreyAssoc/code-tester`) + fix all imports | done | `go.mod` + all Go imports; schema wire ids stay `gointegrity/*` for compat |
 
 ## [NEXT] Product depth
 

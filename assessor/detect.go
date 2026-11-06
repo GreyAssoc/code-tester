@@ -6,8 +6,8 @@ import (
 	"path/filepath"
 	"strings"
 
-	"gointegrity/config"
-	"gointegrity/lang"
+	"github.com/GreyAssoc/code-tester/config"
+	"github.com/GreyAssoc/code-tester/lang"
 )
 
 var defaultSkipDirs = map[string]bool{

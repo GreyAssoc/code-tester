@@ -221,7 +221,7 @@ func sarifResults(r *Report) []any {
 			"message": map[string]any{"text": f.Message},
 			"locations": []any{sarifLocation(f.Location)},
 			"partialFingerprints": map[string]any{
-				"gointegrity/v1": f.Fingerprint,
+				"github.com/GreyAssoc/code-tester/v1": f.Fingerprint,
 			},
 			"properties": map[string]any{
 				"confidence": f.Confidence,

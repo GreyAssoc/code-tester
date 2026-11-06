@@ -13,7 +13,10 @@ Go-only design history: `go-code-integrity-design.md`. Architecture:
 
 ```sh
 go build -o codeintegrity ./cmd/codeintegrity
+# or: go install github.com/GreyAssoc/code-tester/cmd/codeintegrity@latest
 ```
+
+Module path: `github.com/GreyAssoc/code-tester`.
 
 ## Usage
 

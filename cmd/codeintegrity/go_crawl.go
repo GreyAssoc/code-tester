@@ -6,13 +6,13 @@ import (
 	"path/filepath"
 	"strings"
 
-	"gointegrity/callgraph"
-	"gointegrity/check"
-	"gointegrity/config"
-	"gointegrity/flow"
-	"gointegrity/loader"
-	"gointegrity/report"
-	"gointegrity/rules"
+	"github.com/GreyAssoc/code-tester/callgraph"
+	"github.com/GreyAssoc/code-tester/check"
+	"github.com/GreyAssoc/code-tester/config"
+	"github.com/GreyAssoc/code-tester/flow"
+	"github.com/GreyAssoc/code-tester/loader"
+	"github.com/GreyAssoc/code-tester/report"
+	"github.com/GreyAssoc/code-tester/rules"
 )
 
 type commonFlags struct {

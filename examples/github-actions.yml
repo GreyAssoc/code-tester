@@ -1,5 +1,5 @@
-# .github/workflows/gointegrity.yml
-name: gointegrity
+# Example: run codeintegrity on a Go repo (consumer workflow).
+name: codeintegrity
 on:
   pull_request:
   push:
@@ -16,17 +16,17 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/setup-go@v5
         with:
-          go-version: stable
-      - name: Install gointegrity
-        run: go install ./cmd/gointegrity
+          go-version: "1.23.x"
+      - name: Install codeintegrity
+        run: go install github.com/GreyAssoc/code-tester/cmd/codeintegrity@latest
       - name: Crawl (SARIF for code scanning)
-        run: gointegrity crawl --format sarif -o gointegrity.sarif ./... || true
+        run: codeintegrity crawl --format sarif -o codeintegrity.sarif ./... || true
       - uses: github/codeql-action/upload-sarif@v3
         with:
-          sarif_file: gointegrity.sarif
-          category: gointegrity
-      - name: Gate on new findings
-        run: gointegrity crawl ./...
+          sarif_file: codeintegrity.sarif
+          category: codeintegrity
+      - name: Gate on findings
+        run: codeintegrity crawl --fail-on error ./...
 
   checks:
     runs-on: ubuntu-latest
@@ -35,11 +35,6 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/setup-go@v5
         with:
-          go-version: stable
-      - run: go install ./cmd/gointegrity
-      - run: gointegrity check --request integrity/checks.json --format json -o checks-report.json ./...
-      - uses: actions/upload-artifact@v4
-        if: always()
-        with:
-          name: gointegrity-checks
-          path: checks-report.json
+          go-version: "1.23.x"
+      - run: go install github.com/GreyAssoc/code-tester/cmd/codeintegrity@latest
+      - run: codeintegrity check --request integrity/checks.json --format json -o checks-report.json ./...

@@ -8,11 +8,11 @@ import (
 	"sort"
 	"strings"
 
-	"gointegrity/assessor"
-	"gointegrity/config"
-	"gointegrity/lang"
-	"gointegrity/report"
-	"gointegrity/schemas"
+	"github.com/GreyAssoc/code-tester/assessor"
+	"github.com/GreyAssoc/code-tester/config"
+	"github.com/GreyAssoc/code-tester/lang"
+	"github.com/GreyAssoc/code-tester/report"
+	"github.com/GreyAssoc/code-tester/schemas"
 )
 
 func main() {

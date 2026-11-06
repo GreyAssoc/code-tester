@@ -1,4 +1,4 @@
-module gointegrity
+module github.com/GreyAssoc/code-tester
 
 go 1.23.0
 

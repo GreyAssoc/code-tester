@@ -8,8 +8,8 @@ import (
 
 	"golang.org/x/tools/go/ssa"
 
-	"gointegrity/callgraph"
-	"gointegrity/report"
+	"github.com/GreyAssoc/code-tester/callgraph"
+	"github.com/GreyAssoc/code-tester/report"
 )
 
 func CheckCoherence(ctx Context, en Enablement, stubbed map[string]bool) []Finding {

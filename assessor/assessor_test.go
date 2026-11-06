@@ -6,9 +6,9 @@ import (
 	"strings"
 	"testing"
 
-	"gointegrity/assessor"
-	"gointegrity/config"
-	"gointegrity/lang"
+	"github.com/GreyAssoc/code-tester/assessor"
+	"github.com/GreyAssoc/code-tester/config"
+	"github.com/GreyAssoc/code-tester/lang"
 )
 
 func multiRoot(t *testing.T) string {

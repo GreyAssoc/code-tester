@@ -6,7 +6,7 @@ import (
 	"path"
 	"strings"
 
-	"gointegrity/callgraph"
+	"github.com/GreyAssoc/code-tester/callgraph"
 )
 
 type Selector struct {

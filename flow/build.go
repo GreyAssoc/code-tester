@@ -8,8 +8,8 @@ import (
 
 	"golang.org/x/tools/go/ssa"
 
-	"gointegrity/callgraph"
-	"gointegrity/loader"
+	"github.com/GreyAssoc/code-tester/callgraph"
+	"github.com/GreyAssoc/code-tester/loader"
 )
 
 type BuildOptions struct {

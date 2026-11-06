@@ -43,6 +43,37 @@ type Config struct {
 	NoConfig   bool   `yaml:"-" json:"-"`
 }
 
+// DefaultExcludes are always applied unless the caller opts out (see MergeExcludes).
+var DefaultExcludes = []string{
+	"testdata/**",
+	"node_modules/**",
+	"vendor/**",
+	".git/**",
+	"dist/**",
+	"build/**",
+}
+
+// MergeExcludes prepends DefaultExcludes then appends user patterns (deduped).
+func MergeExcludes(user []string) []string {
+	seen := map[string]bool{}
+	out := make([]string, 0, len(DefaultExcludes)+len(user))
+	for _, p := range DefaultExcludes {
+		if p == "" || seen[p] {
+			continue
+		}
+		seen[p] = true
+		out = append(out, p)
+	}
+	for _, p := range user {
+		if p == "" || seen[p] {
+			continue
+		}
+		seen[p] = true
+		out = append(out, p)
+	}
+	return out
+}
+
 func Defaults() Config {
 	t := true
 	return Config{
@@ -51,6 +82,7 @@ func Defaults() Config {
 		FailOn:        "warning",
 		MinConfidence: "medium",
 		Rules:         map[string]RuleOverride{},
+		Exclude:       append([]string(nil), DefaultExcludes...),
 	}
 }
 
@@ -108,6 +140,8 @@ func Load(dir, explicit string, noConfig bool) (Config, error) {
 		t := true
 		cfg.Tests = &t
 	}
+	// Always keep default excludes; file/user patterns extend them.
+	cfg.Exclude = MergeExcludes(cfg.Exclude)
 	return cfg, nil
 }
 

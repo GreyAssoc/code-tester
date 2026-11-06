@@ -5,7 +5,7 @@ tree and runs per-language drivers (Go, Python, JS/TS, CSS), merging one report.
 The same binary also exposes the deep Go surface (check, flow graphs, schema, suppress).
 
 Go-only design history: `go-code-integrity-design.md`. Architecture:
-`docs/ARCHITECTURE.md`.
+`docs/ARCHITECTURE.md`. Roadmap: `docs/ROADMAP.md`.
 
 **Version:** `0.4.0`
 
@@ -36,15 +36,15 @@ go build -o codeintegrity ./cmd/codeintegrity
 ./codeintegrity version
 ```
 
-Dogfood the tool on this repo without fixture noise:
+Dogfood the tool on this repo (defaults already exclude `testdata/**`, `node_modules/**`, `vendor/**`, `.git/**`, `dist/**`, `build/**`):
 
 ```sh
-./codeintegrity --exclude 'testdata/**' --fail-on error .
+./codeintegrity --fail-on error .
 # or deep Go only:
-./codeintegrity --no-config --exclude 'testdata/**' --roots main,exported ./...
+./codeintegrity --no-config --roots main,exported ./...
 ```
 
-Keep `testdata/` in the tree — integration tests and multi-lang fixtures need it. Exclude it at crawl time; do not delete it.
+Keep `testdata/` in the tree — integration tests and multi-lang fixtures need it. Do not delete it; defaults skip it when crawling the repo root.
 
 ## Layout
 

@@ -34,6 +34,7 @@ type RunOptions struct {
 
 // Run detects languages, dispatches drivers, and merges reports.
 func Run(opts RunOptions) (*report.Report, *Detection, error) {
+	opts.Exclude = config.MergeExcludes(opts.Exclude)
 	det, err := Detect(opts.RootDir, opts.Exclude...)
 	if err != nil {
 		return nil, nil, err

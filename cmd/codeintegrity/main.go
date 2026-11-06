@@ -5,9 +5,12 @@ import (
 	"io"
 	"os"
 	"path/filepath"
+	"sort"
 	"strings"
 
 	"gointegrity/assessor"
+	"gointegrity/config"
+	"gointegrity/lang"
 	"gointegrity/report"
 	"gointegrity/schemas"
 )
@@ -57,7 +60,7 @@ Usage:
   codeintegrity [crawl] [flags] [path]              multi-language crawl (default)
   codeintegrity [crawl] [go-flags] [packages]       deep Go crawl (package patterns / Go flags)
   codeintegrity check --request FILE|- [flags] [packages]
-  codeintegrity rules
+  codeintegrity rules [--lang go|python|js|css]
   codeintegrity schema request|report
   codeintegrity suppress --rule ID --source SRC --sink SNK --reason TEXT --owner WHO [--path-hash H] [file]
   codeintegrity languages
@@ -70,7 +73,8 @@ Multi-language flags:
   -o file             write report to file
   --flow              enable Go flow analysis when Go is selected
   --fail-on level     error|warning|note|never (default warning)
-  --exclude glob      exclude path glob (repeatable)
+  --exclude glob      extra exclude glob (repeatable; defaults always include
+                      testdata/**, node_modules/**, vendor/**, .git/**, dist/**, build/**)
 
 Go deep crawl flags (also used by check):
   --config file       config path (default .gointegrity.yml)
@@ -213,6 +217,8 @@ func cmdMultiCrawl(args []string) int {
 		}
 	}
 
+	exclude = config.MergeExcludes(exclude)
+	before, _ := assessor.Detect(abs)
 	langs := assessor.ParseLangList(langList)
 	rep, det, err := assessor.Run(assessor.RunOptions{
 		RootDir:   abs,
@@ -224,6 +230,9 @@ func cmdMultiCrawl(args []string) int {
 	if err != nil {
 		fmt.Fprintln(os.Stderr, err)
 		return 2
+	}
+	if n := detectPathCount(before) - detectPathCount(det); n > 0 {
+		fmt.Fprintf(os.Stderr, "excluded: %d path(s) (%s)\n", n, strings.Join(exclude, ", "))
 	}
 	if det != nil && format == "text" {
 		var found []string
@@ -252,6 +261,17 @@ func cmdMultiCrawl(args []string) int {
 	return exitCode(rep, failOn)
 }
 
+func detectPathCount(d *assessor.Detection) int {
+	if d == nil {
+		return 0
+	}
+	n := 0
+	for _, files := range d.Languages {
+		n += len(files)
+	}
+	return n
+}
+
 func exitCode(rep *report.Report, failOn string) int {
 	if failOn == "never" {
 		return 0
@@ -272,38 +292,41 @@ func exitCode(rep *report.Report, failOn string) int {
 }
 
 func cmdRules(args []string) int {
-	_ = args
-	fmt.Printf("%-8s %-28s %-12s %s\n", "ID", "NAME", "SEVERITY", "DESCRIPTION")
-	for _, r := range ruleTable() {
-		fmt.Printf("%-8s %-28s %-12s %s\n", r.id, r.name, r.sev, r.desc)
+	filter := ""
+	for i := 0; i < len(args); i++ {
+		a := args[i]
+		switch {
+		case a == "--lang" && i+1 < len(args):
+			i++
+			filter = strings.ToLower(args[i])
+		case strings.HasPrefix(a, "--lang="):
+			filter = strings.ToLower(strings.TrimPrefix(a, "--lang="))
+		case a == "-h", a == "--help":
+			fmt.Println("usage: codeintegrity rules [--lang go|python|js|css]")
+			return 0
+		default:
+			fmt.Fprintf(os.Stderr, "unknown argument %s\n", a)
+			return 2
+		}
+	}
+	reg := assessor.Registry()
+	ids := make([]string, 0, len(reg))
+	for id := range reg {
+		ids = append(ids, string(id))
+	}
+	sort.Strings(ids)
+	fmt.Printf("%-8s %-10s %-28s %-12s %s\n", "LANG", "ID", "NAME", "SEVERITY", "DESCRIPTION")
+	for _, id := range ids {
+		if filter != "" && filter != id && !(filter == "py" && id == "python") &&
+			!(filter == "javascript" && id == "js") && !(filter == "ts" && id == "js") {
+			continue
+		}
+		drv := reg[lang.ID(id)]
+		for _, r := range drv.Rules() {
+			fmt.Printf("%-8s %-10s %-28s %-12s %s\n", id, r.ID, r.Name, r.Severity, r.Description)
+		}
 	}
 	return 0
-}
-
-type ruleRow struct{ id, name, sev, desc string }
-
-func ruleTable() []ruleRow {
-	return []ruleRow{
-		{"DEAD001", "unreachable-func", "warning", "function not reachable from any root"},
-		{"DEAD002", "unreachable-method", "warning", "method not reachable from any root"},
-		{"DEAD003", "unused-type", "warning", "type not referenced by reachable code"},
-		{"DEAD004", "unused-const", "warning", "const not referenced by reachable code"},
-		{"DEAD005", "unused-var", "warning", "package var not referenced by reachable code"},
-		{"STUB001", "empty-body", "warning", "empty function body"},
-		{"STUB002", "zero-value-return", "warning", "body only returns zero values"},
-		{"STUB003", "empty-struct-return", "warning", "body only returns empty struct literal"},
-		{"STUB004", "hardcoded-literal-return", "warning", "body only returns hardcoded literals"},
-		{"STUB005", "panic-not-implemented", "error", "panic with not-implemented message"},
-		{"STUB006", "todo-only-body", "error", "body is empty except TODO/FIXME comment"},
-		{"STUB007", "not-implemented-error", "error", "returns not-implemented error"},
-		{"COH001", "param-unused", "warning", "parameter never referenced"},
-		{"COH002", "param-blank-assigned", "warning", "parameter only assigned to _"},
-		{"COH003", "param-no-effect", "warning", "parameter value never affects results or side effects"},
-		{"COH004", "constant-result", "warning", "non-error result is constant on every return path"},
-		{"SUP001", "invalid-suppression", "note", "malformed gointegrity:ignore directive"},
-		{"FLOW001", "undeclared-sensitive-flow", "warning", "labeled value reaches sensitive sink without policy"},
-		{"FLOW002", "dropped-input", "warning", "input never reaches output, sink, or memory cell"},
-	}
 }
 
 func cmdSchema(args []string) int {

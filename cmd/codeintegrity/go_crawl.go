@@ -237,7 +237,7 @@ func cmdGoCrawl(args []string) int {
 	} else if f.Roots == "all" {
 		cfg.Roots = []string{"all"}
 	}
-	cfg.Exclude = append(cfg.Exclude, f.Exclude...)
+	cfg.Exclude = config.MergeExcludes(append(cfg.Exclude, f.Exclude...))
 	if f.Baseline != "" {
 		cfg.Baseline = f.Baseline
 	}

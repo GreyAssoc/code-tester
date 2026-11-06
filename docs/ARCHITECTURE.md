@@ -41,3 +41,7 @@ Slice 1: assessor + Go SSA/RTA engine + Python/JS/CSS deep engines, one merged r
 | `cmd/codeintegrity` | sole CLI (multi-lang crawl + Go check/rules/schema/suppress/flow) |
 
 Drivers must not import sibling language packages. Assessor must not parse source ASTs.
+
+## [ROADMAP]
+
+Prioritized follow-ups live in `docs/ROADMAP.md` (tags R-001…). Architecture owns product decisions that close roadmap items (e.g. R-004 naming, R-023 §15).

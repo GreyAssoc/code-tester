@@ -64,3 +64,5 @@ Keep `testdata/` in the tree — integration tests and multi-lang fixtures need 
 ```sh
 go test ./...
 ```
+
+CI (GitHub Actions): `go test ./...` and a self dogfood crawl (`./codeintegrity --fail-on error .`) on every push/PR to `main`. See `.github/workflows/ci.yml`.

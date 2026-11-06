@@ -31,7 +31,7 @@ Status values: `todo` · `doing` · `done` · `parked`
 |---|---|---|---|
 | R-020 | Gitignore committed report markdowns and built `codeintegrity` binary | done | `*Code Tester Report.md`, `/codeintegrity`, `codeintegrity.exe` |
 | R-021 | Single version source (`cmd` const ↔ `report.ToolVersion`) | done | `report.ToolVersion` only; CLI + tests import it |
-| R-022 | CI: `go test ./...` + dogfood job with `--exclude 'testdata/**' --fail-on error .` | todo | |
+| R-022 | CI: `go test ./...` + dogfood job with `--exclude 'testdata/**' --fail-on error .` | done | `.github/workflows/ci.yml` — test + dogfood (`--fail-on error .`; defaults exclude testdata) |
 | R-023 | Close design §15 (publish path, install, default fail-on) as decisions in ARCHITECTURE | todo | |
 
 ## [SOMEDAY] Nice later

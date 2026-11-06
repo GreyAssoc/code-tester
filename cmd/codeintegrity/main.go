@@ -85,6 +85,7 @@ Go deep crawl flags (also used by check):
   --flow / --context=0|1 (default 1) / --policies file / --suppressions file
   --focus symbol / --depth N / --from/--to node
   --verify-incremental
+  --cache                 opt-in write of .gointegrity-cache (off by default; D-015-08)
   --format text|json|sarif|dot|mermaid|html
 `)
 }
@@ -112,7 +113,8 @@ func wantsGoEngine(args []string) bool {
 			a == "--tests=true", a == "--tests=false", a == "--enable", a == "--disable",
 			a == "--baseline", a == "--write-baseline", a == "--min-confidence",
 			a == "--policies", a == "--suppressions", a == "--focus", a == "--depth",
-			a == "--from", a == "--to", a == "--context", a == "--verify-incremental":
+			a == "--from", a == "--to", a == "--context", a == "--verify-incremental",
+			a == "--cache":
 			return true
 		case strings.HasPrefix(a, "--roots="), strings.HasPrefix(a, "--config="),
 			strings.HasPrefix(a, "--enable="), strings.HasPrefix(a, "--disable="),

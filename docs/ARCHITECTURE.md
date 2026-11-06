@@ -23,7 +23,7 @@ Slice 1: assessor + Go SSA/RTA engine + Python/JS/CSS deep engines, one merged r
 - Crawl routing: package patterns (`./...`) or Go-only flags → deep Go engine; otherwise multi-language assessor
 - Default fail-on: `warning` for local; CI dogfood uses `--fail-on error`
 - Flow context default: `--context=1` (D-015-01)
-- No analysis cache in CI or local defaults (D-015-08)
+- No analysis cache in CI or local defaults (D-015-08); opt-in only via `--cache`
 
 ## [DECISIONS]
 

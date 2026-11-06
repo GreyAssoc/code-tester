@@ -4,6 +4,7 @@ gointegrity
 codeintegrity.exe
 *.sarif
 .gointegrity-baseline.json
+.gointegrity-cache/
 .env
 
 # Local dogfood / crawl report artifacts

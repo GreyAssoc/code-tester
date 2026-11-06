@@ -28,7 +28,7 @@ Status values: `todo` · `doing` · `done` · `parked`
 | R-014 | Windows-aware multi-config Go analysis (D-015-04) | todo | Detect Windows-oriented code; extra GOOS=windows pass on Linux hosts |
 | R-015 | Field-level dead code + field-use tracking (D-015-05) | todo | Rule on once tracking is solid |
 | R-016 | Chunked SARIF by path-depth bands (D-015-07) | todo | e.g. 0–3, 4–7, 8–10… |
-| R-017 | No persisted analysis cache by default (D-015-08) | todo | Confirm CI/docs never recommend stale cache |
+| R-017 | No persisted analysis cache by default (D-015-08) | done | No save unless `--cache`; gitignore `.gointegrity-cache/`; CI unchanged (go module cache only) |
 
 ## [LATER] Repo hygiene
 

@@ -46,6 +46,7 @@ type crawlFlags struct {
 	From              string
 	To                string
 	VerifyIncremental bool
+	Cache             bool // D-015-08: off by default; opt-in write of .gointegrity-cache
 }
 
 type checkFlags struct {
@@ -199,6 +200,8 @@ func cmdGoCrawl(args []string) int {
 			f.To = strings.TrimPrefix(a, "--to=")
 		case a == "--verify-incremental":
 			f.VerifyIncremental = true
+		case a == "--cache":
+			f.Cache = true
 			f.Flow = true
 		case strings.HasPrefix(a, "-"):
 			fmt.Fprintf(os.Stderr, "unknown flag %s\n", a)
@@ -310,8 +313,12 @@ func cmdGoCrawl(args []string) int {
 			}
 			fmt.Fprintln(os.Stderr, "verify-incremental: OK")
 		}
-		// Refresh package cache.
-		_ = saveFlowCache(f.Dir, idx, g, pt)
+		// D-015-08: do not persist analysis cache unless --cache is set.
+		if f.Cache {
+			if err := saveFlowCache(f.Dir, idx, g, pt); err != nil {
+				fmt.Fprintln(os.Stderr, "cache write:", err)
+			}
+		}
 
 		primary := map[string]bool{}
 		for _, p := range idx.Packages {

@@ -7,7 +7,7 @@ The same binary also exposes the deep Go surface (check, flow graphs, schema, su
 Go-only design history: `go-code-integrity-design.md`. Architecture:
 `docs/ARCHITECTURE.md`. Roadmap: `docs/ROADMAP.md`.
 
-**Version:** `0.4.0`
+**Version:** `0.4.0` (source: `report.ToolVersion` in `report/model.go`)
 
 ## Build
 

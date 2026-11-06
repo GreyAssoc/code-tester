@@ -9,8 +9,10 @@ import (
 )
 
 const (
-	SchemaID    = "gointegrity/report/v1"
-	ToolName    = "codeintegrity"
+	SchemaID = "gointegrity/report/v1"
+	ToolName = "codeintegrity"
+	// ToolVersion is the single source of truth for the CLI (`codeintegrity version`)
+	// and report tool.version. Bump here only (R-021).
 	ToolVersion = "0.4.0"
 )
 

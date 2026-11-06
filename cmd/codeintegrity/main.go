@@ -15,8 +15,6 @@ import (
 	"gointegrity/schemas"
 )
 
-const version = "0.4.0"
-
 func main() {
 	os.Exit(run(os.Args[1:]))
 }
@@ -43,7 +41,7 @@ func run(args []string) int {
 		fmt.Println("css")
 		return 0
 	case "version", "--version":
-		fmt.Println(version)
+		fmt.Println(report.ToolVersion)
 		return 0
 	case "help", "-h", "--help":
 		printHelp(os.Stdout)

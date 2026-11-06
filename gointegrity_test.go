@@ -257,8 +257,8 @@ func TestRootsParsing(t *testing.T) {
 func TestVersionAndSchema(t *testing.T) {
 	root := runtest.RepoRoot(t)
 	v := runtest.Run(t, root, "version")
-	if strings.TrimSpace(v.Stdout) != "0.4.0" {
-		t.Fatalf("version %q", v.Stdout)
+	if strings.TrimSpace(v.Stdout) != report.ToolVersion {
+		t.Fatalf("version %q want %s", v.Stdout, report.ToolVersion)
 	}
 	s := runtest.Run(t, root, "schema", "request")
 	if !strings.Contains(s.Stdout, "gointegrity/check-request/v1") && !strings.Contains(s.Stdout, "check-request") {

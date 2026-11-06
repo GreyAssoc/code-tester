@@ -29,7 +29,7 @@ Status values: `todo` · `doing` · `done` · `parked`
 
 | ID | Item | Status | Notes |
 |---|---|---|---|
-| R-020 | Gitignore committed report markdowns and built `codeintegrity` binary | todo | Clean working tree |
+| R-020 | Gitignore committed report markdowns and built `codeintegrity` binary | done | `*Code Tester Report.md`, `/codeintegrity`, `codeintegrity.exe` |
 | R-021 | Single version source (`cmd` const ↔ `report.ToolVersion`) | todo | Avoid drift |
 | R-022 | CI: `go test ./...` + dogfood job with `--exclude 'testdata/**' --fail-on error .` | todo | |
 | R-023 | Close design §15 (publish path, install, default fail-on) as decisions in ARCHITECTURE | todo | |

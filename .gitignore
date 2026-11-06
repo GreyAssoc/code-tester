@@ -1,6 +1,12 @@
 .testbin/
 gointegrity
+/codeintegrity
+codeintegrity.exe
 *.sarif
 .gointegrity-baseline.json
 .env
-/codeintegrity
+
+# Local dogfood / crawl report artifacts
+*Code Tester Report.md
+*.dot
+*.mermaid

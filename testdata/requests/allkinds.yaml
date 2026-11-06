@@ -1,0 +1,30 @@
+schema: gointegrity/check-request/v1
+request_id: all-kinds-001
+checks:
+  - id: c-param
+    kind: param_used
+    target: {package: crawl, function: Scale}
+  - id: c-stub
+    kind: no_placeholder
+    target: {package: crawl, function: Flush}
+  - id: c-reach
+    kind: reachable_from
+    target: {package: crawl, function: Live}
+  - id: c-notreach
+    kind: not_reachable
+    target: {package: crawl, function: deadAlone}
+  - id: c-calls
+    kind: calls
+    target: {package: crawl, function: Live}
+    params: {callee: deadHelper}
+  - id: c-never
+    kind: never_calls
+    target: {package: crawl, function: deadAlone}
+    params: {callee: Live}
+  - id: c-nonzero
+    kind: returns_nonzero
+    target: {package: crawl, function: Live}
+  - id: c-pattern
+    kind: pattern
+    target: {package: crawl, function: Live}
+    params: {op: contains_call, callee: deadHelper}

@@ -1,0 +1,9 @@
+roots: [all]
+tests: true
+fail-on: warning
+min-confidence: medium
+stubs:
+  include-tests: false
+  strict: false
+coherence:
+  include-tests: false

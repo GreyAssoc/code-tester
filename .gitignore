@@ -1,0 +1,6 @@
+.testbin/
+gointegrity
+*.sarif
+.gointegrity-baseline.json
+.env
+/codeintegrity

@@ -1,0 +1,23 @@
+{
+  "schema": "gointegrity/check-request/v1",
+  "request_id": "pay-001",
+  "metadata": {"proposed_by": "strategist-llm", "rationale": "stored, never interpreted"},
+  "checks": [
+    {
+      "id": "payments-handlers-reject-invalid",
+      "kind": "returns_error_on_invalid_input",
+      "description": "verify every handler in package payments returns an error on invalid input",
+      "target": {"package": "payments", "handlers": {"implements": "example.com/shop/payments.Handler"}},
+      "expect": {"quantifier": "all", "min_targets": 2}
+    },
+    {
+      "id": "validated-order-reaches-payment",
+      "kind": "dataflow_reaches",
+      "description": "confirm ValidateOrder's output reaches ProcessPayment without being dropped",
+      "params": {
+        "from": "example.com/shop/orders.ValidateOrder", "from_result": 0,
+        "to": "example.com/shop/payments.ProcessPayment", "to_arg": 0
+      }
+    }
+  ]
+}

@@ -1,0 +1,12 @@
+policies:
+  - id: no-secret-to-log
+    kind: must_not_reach
+    from: example.com/flowdemo.LoadSecret
+    to: fmt.Println
+    label: secret
+sinks:
+  - name: log
+    match: fmt.Print
+sources:
+  - label: config
+    match: os.Getenv

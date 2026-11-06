@@ -1,0 +1,7 @@
+roots: [exported, init]
+fail-on: error
+min-confidence: high
+rules:
+  STUB001: {enabled: false}
+exclude:
+  - "*_gen.go"

@@ -1,0 +1,95 @@
+{
+  "tool_version": "0.2.0",
+  "packages": {
+    "example.com/flowdemo": {
+      "pkg_path": "example.com/flowdemo",
+      "source_hash": "sha256:f5f24ef1d4177400ef4ebb6a85f91a50d4977ee9031f94b3f70324025e245b58",
+      "export_hash": "sha256:f5f24ef1d4177400ef4ebb6a85f91a50d4977ee9031f94b3f70324025e245b58",
+      "summary_hash": "sha256:5ea4d6bf04a3424c9a9b9bc94ea0a3e1a8e539a2caff80f7eef1d4030ac43e59",
+      "summaries": null,
+      "cell_rw": {
+        "alloc:example.com/flowdemo.LogToken@4609880": {
+          "writes": 0,
+          "reads": 0
+        },
+        "field:example.com/flowdemo.Config.Name": {
+          "writes": 0,
+          "reads": 1
+        },
+        "field:example.com/flowdemo.Config.Token": {
+          "writes": 1,
+          "reads": 1
+        },
+        "global:example.com/flowdemo.cfg": {
+          "writes": 0,
+          "reads": 0
+        },
+        "global:example.com/flowdemo.init$guard": {
+          "writes": 1,
+          "reads": 0
+        },
+        "slice:alloc:example.com/flowdemo.LogToken@4609880": {
+          "writes": 1,
+          "reads": 0
+        }
+      },
+      "call_edges": [
+        {
+          "from": "memory_cell:alloc:example.com/flowdemo.LogToken@4609880",
+          "to": "sink:fmt.Println:log",
+          "label": "arg"
+        },
+        {
+          "from": "memory_cell:slice:alloc:example.com/flowdemo.LogToken@4609880",
+          "to": "sink:fmt.Println:log",
+          "label": "arg"
+        },
+        {
+          "from": "result:example.com/flowdemo.LoadSecret.result:0",
+          "to": "value:example.com/flowdemo.LogToken#LoadSecret()",
+          "label": "return"
+        },
+        {
+          "from": "result:os.Getenv.result:0",
+          "to": "value:example.com/flowdemo.LoadSecret#os.Getenv(\"API_TOKEN\":string)",
+          "label": "return"
+        },
+        {
+          "from": "source:os.Getenv:config",
+          "to": "value:example.com/flowdemo.LoadSecret#os.Getenv(\"API_TOKEN\":string)",
+          "label": "return"
+        },
+        {
+          "from": "value:example.com/flowdemo.LoadSecret#os.Getenv(\"API_TOKEN\":string)",
+          "to": "result:example.com/flowdemo.LoadSecret.result:0",
+          "label": "return"
+        },
+        {
+          "from": "value:example.com/flowdemo.LogToken#make any \u003c- string (t2)",
+          "to": "sink:fmt.Println:log",
+          "label": "arg"
+        },
+        {
+          "from": "value:example.com/flowdemo.LogToken#slice t3[:]",
+          "to": "param:fmt.Println.param:0",
+          "label": "arg"
+        },
+        {
+          "from": "value:example.com/flowdemo.LogToken#slice t3[:]",
+          "to": "sink:fmt.Println:log",
+          "label": "arg"
+        },
+        {
+          "from": "value:example.com/flowdemo.UseConfig#*t0",
+          "to": "result:example.com/flowdemo.UseConfig.result:0",
+          "label": "return"
+        },
+        {
+          "from": "value:global#\"API_TOKEN\":string",
+          "to": "param:os.Getenv.param:0",
+          "label": "arg"
+        }
+      ]
+    }
+  }
+}

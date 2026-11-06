@@ -1,0 +1,45 @@
+# .github/workflows/gointegrity.yml
+name: gointegrity
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+  security-events: write
+
+jobs:
+  crawl:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-go@v5
+        with:
+          go-version: stable
+      - name: Install gointegrity
+        run: go install ./cmd/gointegrity
+      - name: Crawl (SARIF for code scanning)
+        run: gointegrity crawl --format sarif -o gointegrity.sarif ./... || true
+      - uses: github/codeql-action/upload-sarif@v3
+        with:
+          sarif_file: gointegrity.sarif
+          category: gointegrity
+      - name: Gate on new findings
+        run: gointegrity crawl ./...
+
+  checks:
+    runs-on: ubuntu-latest
+    if: hashFiles('integrity/checks.json') != ''
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-go@v5
+        with:
+          go-version: stable
+      - run: go install ./cmd/gointegrity
+      - run: gointegrity check --request integrity/checks.json --format json -o checks-report.json ./...
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: gointegrity-checks
+          path: checks-report.json

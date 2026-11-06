@@ -1,0 +1,15 @@
+.used {
+  color: red;
+}
+.unused {
+  color: blue;
+}
+#orphan {
+}
+:root {
+  --brand: #111;
+  --unused-var: #fff;
+}
+.box {
+  color: var(--brand);
+}

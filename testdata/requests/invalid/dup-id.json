@@ -1,0 +1,8 @@
+{
+  "schema": "gointegrity/check-request/v1",
+  "request_id": "dup",
+  "checks": [
+    {"id": "a", "kind": "param_used"},
+    {"id": "a", "kind": "param_used"}
+  ]
+}
